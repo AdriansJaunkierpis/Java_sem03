@@ -1,30 +1,45 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Post {
 	private String msg;
-	private LocalDate date;
+	private LocalDateTime date;
 	private int countOfLikes;
 	
 	public String getMsg() {
 		return msg;
 	}
 	public void setMsg(String msg) {
-		this.msg = msg;
+		if (msg != null && msg.length() > 3) {
+			this.msg = msg;
+		} else {
+			msg = "----";
+		}
 	}
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
-	} //TODO use localdate
-	public void setDate(LocalDate date) {
-		this.date = date;
+	}
+	public void setDateTime() {
+		this.date = LocalDateTime.now();
 	}
 	public int getCountOfLikes() {
 		return countOfLikes;
 	}
-	public void setCountOfLikes(int countOfLikes) {
-		this.countOfLikes = countOfLikes;
+	public void increaseLikes() {
+		countOfLikes++;
 	}
 	
+	public Post() {
+		setMsg("Test msg");
+		setDateTime();
+	}
+	public Post(String msg) {
+		setMsg(msg);
+	}
 	
+	public String toString() {
+		return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " -> " + msg + "( " + countOfLikes + ")";
+	}
 }
