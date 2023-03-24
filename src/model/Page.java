@@ -59,5 +59,16 @@ public class Page {
 		}
 	}
 	
+	public Page() {
+		setTitle("TITLE");
+		setDescription("DESCRIPTION");
+	}
+	public Page(String title, String description) {
+		setTitle(title);
+		setDescription(description);
+	}
 	
+	public String toString() {
+		return title + "(" + description + ") -->" + postsInPage + "-->" + followers.size();
+	}
 }
