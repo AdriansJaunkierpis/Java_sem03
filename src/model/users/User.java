@@ -1,46 +1,89 @@
 package model.users;
 
-import model.GuestUser;
+import model.Page;
+import model.Post;
+import model.PostType;
+import service.MainService;
 
-public class User extends GuestUser {
+public abstract class User extends GuestUser {
 	private String username;
-	private String nameAndSurname;
-	private String password;
+	private String name; //for Business user it will be name of owner
+	private String surname;
+	private String encodedPassword;
+
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getNameAndSurname() {
-		return nameAndSurname;
-	}
-	public void setNameAndSurname(String nameAndSurname) {
-		if(nameAndSurname != null && nameAndSurname.matches("([A-ZĀČĒĢĪĶĻŅŠŪŽ]){1}[a-zāčēģīķļņšūž]+[ ]?")) {
-			this.nameAndSurname = nameAndSurname;
+		if (username != null && username.matches("[a-z0-9.]{8,20}")) {
+			this.username = username;
 		} else {
-			this.nameAndSurname = "Unknown";
+			this.username = "default.user";
 		}
+		
 	}
-	public String getPassword() {
-		return password;
+	public String getName() {
+		return name;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	public String getEncodedPassword() {
+		return encodedPassword;
+	}
+	public void setEncodedPassword(String encodedPassword) {
+		if (encodedPassword != null && encodedPassword.matches("[A-Za-z0-9]{8, 20")) {
+			//TODO password encoding
+			this.encodedPassword = encodedPassword;
+		} else {
+			encodedPassword = "defaultpassword";
+		}
+		
 	}
 	
 	public User() {
 		super();
-		setUsername("Unknown");
-		setNameAndSurname("Unknown");
-		setPassword("1234");
+		setUsername("default.user");
+		setName("defaultname");
+		setEncodedPassword("defaultpassword");
+		setSurname("defaultsurname");
 	};
-	public User(String username, String nameAndSurname, String password) {
+	public User(String username, String name, String surname, String password) {
 		super();
-		this.username = username;
-		this.nameAndSurname = nameAndSurname;
-		this.password = password;
+		setUsername(username);
+		setName(name);
+		setSurname(surname);
+		setEncodedPassword(password);
 	}
 	
+	public String toString() {
+		return "USER ID: " + getGeneratedID() + ", " + name + " " + surname + ": " + username;
+	}
+	
+	public boolean login() {
+		for (User temp: MainService.allRegisteredUsers) {
+			if (temp.getUsername().equals(username) && temp.getEncodedPassword().equals(encodedPassword)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void followPage(Page page) throws Exception {
+		if (page == null) {
+			throw (new Exception("Page not found"));
+		}
+		page.addFollowers(this);
+	}
+	
+	//TODO unfollow page
+	
+	public abstract Post createPost(Post post, PostType type);
 	
 }

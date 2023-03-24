@@ -1,4 +1,4 @@
-package model;
+package model.users;
 
 public class GuestUser {
 	private long generatedID;
@@ -16,8 +16,8 @@ public class GuestUser {
 	}
 
 	public String toString() {
-		return "GUESTUSER: " + generatedID;
+		return "GUESTUSER ID: " + generatedID;
 	}
 	
-	
+	//TODO add find functions
 }
