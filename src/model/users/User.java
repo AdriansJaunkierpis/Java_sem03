@@ -41,17 +41,15 @@ public abstract class User extends GuestUser {
 		return encodedPassword;
 	}
 	public void setEncodedPassword(String encodedPassword) {
-		if (encodedPassword != null && encodedPassword.matches("[A-Za-z0-9]{8, 20")) {
-			//TODO password encoding
+		if (encodedPassword != null && encodedPassword.matches("[A-Za-z0-9]{3,20}")) {
 			MessageDigest md;
 			try {
 				md = MessageDigest.getInstance("MD5");
 				md.update(encodedPassword.getBytes());
 				encodedPassword = new String(md.digest());
-			} catch (NoSuchAlgorithmException e) {
+			} catch (NoSuchAlgorithmException e) { 
 				this.encodedPassword = "defaultpassword";
 			}
-
 			this.encodedPassword = encodedPassword;
 		} else {
 			encodedPassword = "defaultpassword";
@@ -79,7 +77,7 @@ public abstract class User extends GuestUser {
 	}
 	
 	public boolean login() {
-		for (User temp: MainService.allRegisteredUsers) {
+		for (User temp: MainService.allRegisterdUsers) {
 			if (temp.getUsername().equals(username) && temp.getEncodedPassword().equals(encodedPassword)) {
 				return true;
 			}
