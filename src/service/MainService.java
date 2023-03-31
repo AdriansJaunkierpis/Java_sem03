@@ -112,6 +112,8 @@ public class MainService {
 		for(Post temp: u5.getAllPages().get(0).getPostsInPage()) {
 			System.out.println(temp);
 		}
+		System.out.println("---------finding-----------------");
+		System.out.println(u3.findUsersByUsernameOrSurname("Skirmante"));
 	}
 
 }
