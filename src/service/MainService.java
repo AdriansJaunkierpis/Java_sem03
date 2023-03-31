@@ -113,7 +113,11 @@ public class MainService {
 			System.out.println(temp);
 		}
 		System.out.println("---------finding-----------------");
-		System.out.println(u3.findUsersByUsernameOrSurname("Skirmante"));
+		System.out.println(u1.findUsersByUsernameOrSurname("sia"));
+		System.out.println("---------finding-----------------");
+		System.out.println(u1.findPagesByTitleOrDescription("zied"));
+		
+		System.out.println("---------finding-----------------");
+		System.out.println(u1.findPublicPostsInPrivateUserOrInPage("atlaid"));
 	}
-
 }
